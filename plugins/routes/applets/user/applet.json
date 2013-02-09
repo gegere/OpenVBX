@@ -1,0 +1,5 @@
+{
+	"name" : "If User",
+	"description" : "Redirects the flow if the caller is a group member or user.",
+	"type" : ["voice", "sms"]
+}
