@@ -1,5 +1,5 @@
 <?php
-$keys = AppletInstance::getValue('keys[]', array('') );
+$keys = AppletInstance::getValue('keys[]', array('1','2','3','4'));
 $choices = AppletInstance::getValue('choices[]');
 
 if (gettype($keys) != 'array' || count($keys) == 0) {
@@ -41,7 +41,7 @@ if (gettype($keys) != 'array' || count($keys) == 0) {
 				<tr>
 					<td>
 						<fieldset class="vbx-input-container">
-							<textarea rows="5" class="keypress" name="keys[]" autocomplete="off"><?php echo htmlentities($key) ?></textarea>
+							<textarea rows="5" class="keypress" name="keys[]" autocomplete="off"><?= $key ?></textarea>
 						</fieldset>
 					</td>
 					<td>then</td>
