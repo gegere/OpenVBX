@@ -1,25 +1,44 @@
 <?php
-$response = new TwimlResponse;
- 
+$response = new Response();
+
+/* Fetch all the data to operate the router */
+$keys = AppletInstance::getValue('keys');
+$invalid = AppletInstance::getDropZoneUrl('invalid');
+
+$selected_item = false;
+
+/* Build Menu Items */
 $choices = AppletInstance::getDropZoneUrl('choices[]');
-$keys = AppletInstance::getValue('keys[]');
- 
-foreach($keys AS $i=> $key) {
-    $keys[$i] = normalize_phone_to_E164($key);
+$keys = AppletInstance::getDropZoneValue('keys[]');
+$router_items = AppletInstance::assocKeyValueCombine($keys, $choices);
+
+$incoming_number = null;
+
+if (isset($_REQUEST['From'])) {
+	$incoming_number = $_REQUEST['From'];
+} else if (isset($_REQUEST['Caller'])) {
+	$incoming_number = $_REQUEST['Caller'];
 }
- 
-$menu_items = AppletInstance::assocKeyValueCombine($keys, $choices);
-$fallback = AppletInstance::getDropZoneUrl('fallback');
-$text = AppletInstance::getValue('prompt-text');
-$caller = normalize_phone_to_E164($_REQUEST['Caller']);
- 
-$response->say($text);
- 
-if(!empty($menu_items[$caller])) {
-    $response->redirect($menu_items[$caller]);
+
+if (isset($incoming_number)) {
+	foreach($keys as $key) {
+		$numbers = explode("\n", str_replace("\n\r", "\n", $key));
+
+		if (in_array($incoming_number, $numbers)) {
+			// change this to caller id
+			$routed_path = $router_items[$key];
+			$response->addRedirect($routed_path);
+			$response->Respond();
+			exit;
+		}
+	}
 }
-else {
-    $response->redirect($fallback);
+
+if(!empty($invalid)) {
+	$response->addRedirect($invalid);    
+	$response->Respond();
+	exit;
+} else {	 
+	$response->Respond();
+	exit;
 }
- 
-$response->respond();
