@@ -2,6 +2,8 @@
 $keys = AppletInstance::getValue('keys[]', array('') );
 $choices = AppletInstance::getValue('choices[]');
 
+$numbers_entry = $keys;
+
 if (gettype($keys) != 'array' || count($keys) == 0) {
 	$keys = array('');
 }
@@ -24,7 +26,7 @@ if (gettype($keys) != 'array' || count($keys) == 0) {
 				<tr class="hide">
 					<td>
 						<fieldset class="vbx-input-container">
-							<textarea rows="5" class="keypress" name="new-keys[]" autocomplete="off"></textarea>
+							<input type="text" class="keypress" name="new-keys[]" autocomplete="off" />
 						</fieldset>
 					</td>
 					<td>then</td>
@@ -41,7 +43,7 @@ if (gettype($keys) != 'array' || count($keys) == 0) {
 				<tr>
 					<td>
 						<fieldset class="vbx-input-container">
-							<textarea rows="5" class="keypress" name="keys[]" autocomplete="off"><?php echo htmlentities($key) ?></textarea>
+							<input type="text" class="keypress" name="keys[]" autocomplete="off" value="<?= $numbers_entry ?>" />
 						</fieldset>
 					</td>
 					<td>then</td>
