@@ -1,13 +1,13 @@
 <?php
 
-$responses = AppletInstance::getDropZoneUrl('responses[]');
+$responses = (array) AppletInstance::getDropZoneUrl('responses[]');
 $keys = (array) AppletInstance::getValue('keys[]');
 $invalid_option = AppletInstance::getDropZoneUrl('invalid-option');
 $menu_items = AppletInstance::assocKeyValueCombine($keys, $responses);
 $caller_id = null;
 
 if(!empty($_REQUEST['Direction'])) {
-	$caller_id = normalize_phone_to_E164(in_array($_REQUEST['Direction'], array('inbound', 'incoming')) ? $_REQUEST['From'] : $_REQUEST['To']);
+	$number = normalize_phone_to_E164(in_array($_REQUEST['Direction'], array('inbound', 'incoming')) ? $_REQUEST['From'] : $_REQUEST['To']);
 	if(preg_match('/([0-9]{10})$/', $number, $matches))
 		$caller_id = $matches[1];
 }
