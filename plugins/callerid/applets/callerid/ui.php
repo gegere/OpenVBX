@@ -5,7 +5,7 @@ $responses = (array) AppletInstance::getValue('responses[]');
 
 <div class="vbx-applet callerid-applet">
 		<h2>Caller ID Router</h2>
-		<p>Type phone numbers without spaces or punctuation.  For example, <code>+18005551234</code> instead of <code>+1 (800) 555-1234</code>.</p>
+		<p>Type phone numbers without spaces or punctuation. For example, <code>8005551234</code> instead of <code>(800) 555-1234</code>. The numbers you enter will be compared starting at the end of the number calling in. For example if didn't know the country / area code calling in, enter the numbers you do know ie: <code>5551234</code> and any called ending with these digits will follow the applet you provided.</p>
 		<table class="vbx-callerid-grid options-table">
 			<thead>
 				<tr>
