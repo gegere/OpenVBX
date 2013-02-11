@@ -8,9 +8,9 @@ $invalid = AppletInstance::getDropZoneUrl('invalid');
 $selected_item = false;
 
 /* Build Menu Items */
-$choices = AppletInstance::getDropZoneUrl('choices[]');
+$responses = AppletInstance::getDropZoneUrl('responses[]');
 $keys = AppletInstance::getDropZoneValue('keys[]');
-$router_items = AppletInstance::assocKeyValueCombine($keys, $choices);
+$router_items = AppletInstance::assocKeyValueCombine($keys, $responses);
 
 $incoming_number = null;
 

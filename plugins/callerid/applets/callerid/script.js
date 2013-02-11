@@ -25,7 +25,7 @@ $(document).ready(function() {
 		newRow = $('<tr>' + newRow + '</tr>').show().insertAfter(row);
 		$('.flowline-item').droppable(Flows.events.drop.options);
 		$('td', newRow).flicker();
-		$('.flowline-item input', newRow).attr('name', 'choices[]');
+		$('.flowline-item input', newRow).attr('name', 'responses[]');
 		$('textarea.keypress', newRow).attr('name', 'keys[]');
 		$('input', newRow).removeAttr('disabled');
 		$('textarea', newRow).removeAttr('disabled').focus();
