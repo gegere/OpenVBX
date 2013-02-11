@@ -1,44 +1,22 @@
 <?php
-$response = new Response();
 
-/* Fetch all the data to operate the router */
-$keys = AppletInstance::getValue('keys');
-$invalid = AppletInstance::getDropZoneUrl('invalid');
-
-$selected_item = false;
-
-/* Build Menu Items */
 $responses = AppletInstance::getDropZoneUrl('responses[]');
-$keys = AppletInstance::getDropZoneValue('keys[]');
-$router_items = AppletInstance::assocKeyValueCombine($keys, $responses);
+$keys = (array) AppletInstance::getValue('keys[]');
+$invalid_option = AppletInstance::getDropZoneUrl('invalid-option');
 
-$incoming_number = null;
-
-if (isset($_REQUEST['From'])) {
-	$incoming_number = $_REQUEST['From'];
-} else if (isset($_REQUEST['Caller'])) {
-	$incoming_number = $_REQUEST['Caller'];
+foreach($keys AS $i=> $key) {
+    $keys[$i] = normalize_phone_to_E164($key);
 }
+ 
+$menu_items = AppletInstance::assocKeyValueCombine($keys, $responses);
 
-if (isset($incoming_number)) {
-	foreach($keys as $key) {
-		$numbers = explode("\n", str_replace("\n\r", "\n", $key));
-
-		if (in_array($incoming_number, $numbers)) {
-			// change this to caller id
-			$routed_path = $router_items[$key];
-			$response->addRedirect($routed_path);
-			$response->Respond();
-			exit;
-		}
-	}
+$caller = normalize_phone_to_E164($_REQUEST['Caller']);
+  
+if(!empty($menu_items[$caller])) {
+    $response->redirect($menu_items[$caller]);
 }
-
-if(!empty($invalid)) {
-	$response->addRedirect($invalid);    
-	$response->Respond();
-	exit;
-} else {	 
-	$response->Respond();
-	exit;
+else {
+    $response->redirect($invalid_option);
 }
+ 
+$response->respond();
