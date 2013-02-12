@@ -1,5 +1,4 @@
 <?php
-$defaultNumberOfChoices = 2;
 $keys = (array) AppletInstance::getValue('keys[]', array('1' => '', '2' => '') );
 $responses = (array) AppletInstance::getValue('responses[]');
 ?>

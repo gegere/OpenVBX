@@ -16,7 +16,7 @@ $response = new TwimlResponse;
 
 if(!empty($caller_id) && array_key_exists($caller_id, $menu_items) && !empty($menu_items[$caller_id])) {
     $response->redirect($menu_items[$caller_id]);
-} else {
+} elseif(!empty($invalid_option)) {
     $response->redirect($invalid_option);
 }
  
