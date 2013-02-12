@@ -35,7 +35,7 @@ $responses = (array) AppletInstance::getValue('responses[]');
 			<tr>
 				<td>
 					<fieldset class="vbx-input-container">
-						<input class="keypress small" type="text" name="keys[<?php echo $key; ?>]" value="<?php echo $key ?>" autocomplete="off" />
+						<input class="keypress small" type="text" name="keys[<?= $key ?>]" value="<?php echo $key ?>" autocomplete="off" />
 					</fieldset>
 				</td>
 				<td>then</td>

@@ -1,6 +1,10 @@
 <?php
 $keys = (array) AppletInstance::getValue('keys[]', array('1' => '', '2' => '') );
 $responses = (array) AppletInstance::getValue('responses[]');
+
+print_r($keys);
+print_r($responses);
+
 ?>
 
 <div class="vbx-applet callerid-applet">
@@ -19,12 +23,12 @@ $responses = (array) AppletInstance::getValue('responses[]');
 				<tr class="hide">
 					<td>
 						<fieldset class="vbx-input-container">
-							<input type="text" class="keypress small" name="new-keys[]" autocomplete="off" />
+							<input type="text" class="keypress small" name="new-keys[]" value="" autocomplete="off" />
 						</fieldset>
 					</td>
 					<td>then</td>
 					<td>
-						<?php echo AppletUI::dropZone('new-responses[]', 'Drop item here'); ?>
+						<?php echo AppletUI::dropZone('new-responses[]', 'Drop applet here'); ?>
 					</td>
 					<td>
 						<a href="" class="add action"><span class="replace">Add</span></a> <a href="" class="remove action"><span class="replace">Remove</span></a>
@@ -36,7 +40,7 @@ $responses = (array) AppletInstance::getValue('responses[]');
 				<tr>
 					<td>
 						<fieldset class="vbx-input-container">
-							<input type="text" class="keypress small" name="keys[<?php echo $key ?>]" autocomplete="off" value="<?php echo $key ?>" />
+							<input type="text" class="keypress small" name="keys[<?= $key ?>]" autocomplete="off" value="<?= $key ?>" />
 						</fieldset>
 					</td>
 					<td>then</td>
@@ -50,7 +54,6 @@ $responses = (array) AppletInstance::getValue('responses[]');
 				<?php endforeach; ?>
 			</tbody>
 		</table><!-- .vbx-callerid-grid -->
-
 		<h3>When the caller ID is not in the above list</h3>
 		<p>What should we do?</p>
 		<?php echo AppletUI::dropZone('invalid-option'); ?>

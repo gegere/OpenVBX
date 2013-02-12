@@ -1,5 +1,4 @@
 <?php
-
 $responses = (array) AppletInstance::getDropZoneUrl('responses[]');
 $keys = (array) AppletInstance::getValue('keys[]');
 $invalid_option = AppletInstance::getDropZoneUrl('invalid-option');

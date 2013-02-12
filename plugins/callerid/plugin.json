@@ -1,6 +1,6 @@
 {
 	"name": "Caller ID Router",
-	"author": "kmorrill",
+	"author": "Jason Gegere",
 	"description": "Routes the call based on caller ID",
-	"disabled": true
+	"url" : "http://twitter.com/gegere"
 }
