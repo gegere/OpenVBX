@@ -1,10 +1,6 @@
 <?php
 $keys = (array) AppletInstance::getValue('keys[]', array('1' => '', '2' => '') );
 $responses = (array) AppletInstance::getValue('responses[]');
-
-print_r($keys);
-print_r($responses);
-
 ?>
 
 <div class="vbx-applet callerid-applet">
