@@ -23,7 +23,7 @@ print_r($responses);
 				<tr class="hide">
 					<td>
 						<fieldset class="vbx-input-container">
-							<input type="text" class="keypress small" name="new-keys[]" value="" autocomplete="off" />
+							<input class="keypress small" type="text" name="new-keys[]" value="" autocomplete="off" />
 						</fieldset>
 					</td>
 					<td>then</td>
@@ -40,7 +40,7 @@ print_r($responses);
 				<tr>
 					<td>
 						<fieldset class="vbx-input-container">
-							<input type="text" class="keypress small" name="keys[<?= $key ?>]" autocomplete="off" value="<?= $key ?>" />
+							<input class="keypress small" type="text" name="keys[<?= $key ?>]" value="<?= $key ?>"  autocomplete="off" />
 						</fieldset>
 					</td>
 					<td>then</td>
