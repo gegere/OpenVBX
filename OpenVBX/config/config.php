@@ -19,8 +19,7 @@ $config['server_name'] = $_SERVER['HTTP_HOST'];
 |	http://example.com/
 |
 */
-$config['base_url']= "http".((!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off')? 's' : '')
-	  				 ."://".$config['server_name']. rtrim(WEB_ROOT, '/').'/';
+$config['base_url']= "https://".$config['server_name']. rtrim(WEB_ROOT, '/').'/';
 
 /*
 |--------------------------------------------------------------------------
