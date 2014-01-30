@@ -73,6 +73,9 @@ class VBX_Outgoing_caller_ids extends Model
 		$num->name = $item->friendly_name;
 		$num->phone = format_phone($item->phone_number);
 		$num->phone_number = $item->phone_number;
+		$num->capabilities = new stdClass();
+		$num->capabilities->voice = true;
+		$num->capabilities->sms = false;
 
 		return $num;
 	}
