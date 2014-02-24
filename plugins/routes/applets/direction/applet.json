@@ -1,0 +1,5 @@
+{
+	"name" : "Call Direction",
+	"description" : "Redirects the flow based on the call direction.",
+	"type" : ["voice"]
+}

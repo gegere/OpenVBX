@@ -1,0 +1,6 @@
+{
+	"name" : "Twitter",
+	"author" : "Chad Smith <chad@nospam.me>",
+	"description" : "Returns the latest tweet from the specified user.",
+	"url" : "http://twitter.com/chadsmith"
+}
