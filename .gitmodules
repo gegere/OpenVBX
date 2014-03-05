@@ -1,0 +1,3 @@
+[submodule "plugins/AddressBook-VBX"]
+	path = plugins/AddressBook-VBX
+	url = git@github.com:gegere/AddressBook-VBX.git
