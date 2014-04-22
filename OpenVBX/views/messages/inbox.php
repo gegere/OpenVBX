@@ -36,7 +36,7 @@
 				<?php foreach($threads as $item):
 				$item = $item[0];
 				?>
-				<tr rel="<?php echo $item['id'] ?>" class="message-row <?php echo ($item['type']=='sms')? 'sms-type' : 'call-type'?> <?php echo ($item['unread'])? 'unread' : 'read'?>">
+				<tr rel="<?php echo $item['original_caller'] ?>" class="message-row <?php echo ($item['type']=='sms')? 'sms-type' : 'call-type'?> <?php echo ($item['unread'])? 'unread' : 'read'?>">
 					<td class="message-select">
 						<div style="padding: 6px">
 							<input type="checkbox" name="message[id][]" value="<?php echo $item['id'] ?>" />

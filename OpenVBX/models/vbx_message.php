@@ -400,7 +400,7 @@ class VBX_Message extends Model {
 		{
 			foreach ($thread as $message)
 			{
-				if ($message->original_caller == $newMessage->original_caller)
+				if ($message->caller == $newMessage->caller)
 				{
 					$thread[] = $newMessage;
 					return $threads;
@@ -426,7 +426,7 @@ class VBX_Message extends Model {
 		{
 			if (!($result['threads'] = $this->insert_message($item, $result['threads'])))
 			{
-				$result['threads'][][] = $item;
+				$result['threads'][$item->caller][] = $item;
 			}
 		}
 		return $result;

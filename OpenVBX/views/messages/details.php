@@ -14,7 +14,7 @@
 	<div class="vbx-content-container">
 		<div class="message-details-header">
 			<p class="date-created unformatted-relative-timestamp hide">
-				<?php echo strtotime($received_time) ?>
+				<?php echo strtotime($messages[count($messages)-1]['received_time']) ?>
 			</p>
 			
 			<table class="details-info">
@@ -24,11 +24,11 @@
 							<span class="call-from-label">From:</span>
 						</td>
 						<td>
-							<span class="call-from-number"><?php echo $caller ?></span>
+							<span class="call-from-number"><?php echo $messages[0]['caller'] ?></span>
 							<a href="" class="quick-call-button"><span class="replace">Call</span></a>
 							<div id="quick-call-popup-<?php echo $id ?>" class="quick-call-popup hide">
 								<a href="" class="close action toggler"><span class="replace">close</span></a>	
-								<p class="call-from-number"><?php echo $caller ?></p>
+								<p class="call-from-number"><?php echo $messages[0]['caller'] ?></p>
 								<ul class="caller-id-phone">
 									<li><a href="<?php echo site_url("messages/details/{$id}/callback") ?>" class="call">Call<span class="to hide"><?php echo $caller ?></span> <span class="callerid hide"><?php echo $called ?></span><span class="from hide"><?php echo isset($user_numbers[0])? $user_numbers[0]->value : '' ?></span></a></li>
 								</ul>
@@ -40,7 +40,7 @@
 							<span class="call-to-label">To:</span>
 						</td>
 						<td>
-							<span class="call-to-number"><?php echo $called ?></span>
+							<span class="call-to-number"><?php echo $messages[0]['called'] ?></span>
 						</td>
 					</tr>
 				</tbody>
@@ -116,20 +116,20 @@
 			
 		</div><!-- .message-details-playback -->
 		<?php endif; ?>
-
-		<div class="message-details-transcript">
-			<?php if($type == 'sms'): ?>
-			<h3>Text Message</h3>
-			<?php else: ?>
-			<h3>Transcription</h3>
-			<?php endif; ?>
-			<div class="message-transcript"><?php echo (is_null($message->content_text) ? "(no transcription)" : $message->content_text) ?></div>
-		</div><!-- .message-details-transcript -->
-
+		<?php foreach($messages as $item): ?>
+			<div class="message-details-transcript">
+				<?php if($item['type'] == 'sms'): ?>
+				<h3>Text Message</h3>
+				<?php else: ?>
+				<h3>Transcription</h3>
+				<?php endif; ?>
+				<div class="message-transcript"><?php echo (is_null($item['summary']) ? "(no transcription)" : $item['summary']) ?></div>
+			</div><!-- .message-details-transcript -->
+		<?php endforeach; ?>
 	</div><!-- .vbx-content-container -->
 	</form>
 
-	<?php if($type == 'sms'): ?>
+	<?php if(/*$type == 'sms'*/ 1): ?>
 	<div class="vbx-content-container">
 		<div class="message-details-notes">
 			<form id="reply-sms" name="reply-sms" action="<?php echo site_url("messages/sms/$id") ?>" method="post">
