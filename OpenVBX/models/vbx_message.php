@@ -394,6 +394,44 @@ class VBX_Message extends Model {
 		return $result;
 	}
 
+	function insert_message($newMessage, $threads)
+	{
+		foreach ($threads as &$thread)
+		{
+			foreach ($thread as $message)
+			{
+				if ($message->original_caller == $newMessage->original_caller)
+				{
+					$thread[] = $newMessage;
+					return $threads;
+				}
+			}
+		}
+		return false;
+	}
+
+	function get_threads($options, $offset, $size)
+	{
+		$query = $this->get_messages_query($options);
+		$result['total'] = $query->count_all_results();
+		$result['max'] = $size;
+		$result['offset'] = $offset;
+		$query = $this->get_messages_query($options);
+		$queryResult = $query
+			 ->limit($size, $offset)
+			 ->get()
+			 ->result();
+		uasort($queryResult, 'sort_by_date');
+		foreach($queryResult as $item)
+		{
+			if (!($result['threads'] = $this->insert_message($item, $result['threads'])))
+			{
+				$result['threads'][][] = $item;
+			}
+		}
+		return $result;
+	}
+
 	function notify_message($message)
 	{	
 		$ci =& get_instance();

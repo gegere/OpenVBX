@@ -310,6 +310,99 @@ class Inbox extends User_Controller {
 			
 			$group_name = 'Inbox';
 		}
+
+		$threads = $this->vbx_message->get_threads($message_options,
+													 $offset,
+													 $max);
+		$total_threads = $threads['total'];
+		$this->load->library('pagination');
+		$group_name = '';
+		
+		$data['active_users'] = VBX_User::search(array('is_active' => 1));
+		
+		if($threads['total'] < 1)
+		{
+			$group_name = $inbox_counts[$group]->name;
+			
+		}
+		else
+		{
+			foreach($threads['threads'] as $thread)
+			{
+				unset($threadItem);
+				foreach($thread as $item)
+				{
+					$group_name = '';
+					$group_id = 0;
+					if($item->owner_type == 'group' && isset($inbox_counts[$item->owner_id]))
+					{
+						$group_name = $inbox_counts[$item->owner_id]->name;
+						$group_id = $item->owner_id;
+					}
+					if($item->owner_type == 'user' && isset($inbox_counts[$item->owner_id]))
+					{
+						$group_name = 'Inbox';
+						$group_id = $item->owner_id;
+					}
+					
+					$this->session->set_flashdata('selected-folder', $group_name);
+					$this->session->set_flashdata('selected-folder-id', $group_id);
+
+					$short_summary = null;
+					
+					if (is_null($item->content_text))
+					{
+						$short_summary = '&nbsp;';
+						if ($do_transcriptions)
+						{
+							$short_summary = "(no transcription)";
+						}
+					}
+					else
+					{
+						$short_summary = substr($item->content_text, 0, 125)
+							 . ((strlen($item->content_text) > 125)? '...' : '');
+					}
+						
+					$date_recorded = date('Y-M-d\TH:i:s+00:00', strtotime($item->created));
+					$date_updated = date('Y-M-d\TH:i:s+00:00', strtotime($item->updated));
+
+					$assigned_user = null;
+					foreach($data['active_users'] as $u)
+					{
+						if($u->id == $item->assigned_to)
+						{
+							$assigned_user = clone($u);
+						}
+					}
+					$threadItem[] = array(
+									 'id' => $item->id,
+									 'folder' => $group_name,
+									 'folder_id' => $group_id,
+									 'short_summary' => $short_summary,
+									 'assigned' => $item->assigned_to,
+									 'type' => $item->type,
+									 'assigned_user' => $assigned_user,
+									 'ticket_status' => $item->ticket_status,
+									 'archived' => ($item->status == 'archived')? true : false,
+									 'unread' => ($item->status == 'new')? true : false,
+									 'recording_url' => $item->content_url,
+									 'recording_length' => format_player_time($item->size),
+									 'received_time' => $date_recorded,
+									 'last_updated' => $date_updated,
+									 'called' => format_phone($item->called),
+									 'caller' => format_phone($item->caller),
+									 'original_called' => $item->called,
+									 'original_caller' => $item->caller,
+									 'owner_type' => $item->owner_type,
+									 );
+
+				}
+				$threadItems[] = $threadItem;
+			}
+			
+			$group_name = 'Inbox';
+		}
 		
 		// set up pagination
 		$group_id = ($group === false)? 0 : $group;
@@ -320,6 +413,7 @@ class Inbox extends User_Controller {
 							 );
 		$this->pagination->initialize($page_config);
 		$data['items'] = $json['messages']['items'] = $items;
+		$data['threads'] = $json['threads']['items'] = $threadItems;
 		// render to output array
 		$data['pagination'] = CI_Template::literal($this->pagination->create_links());
 		$data['transcribe'] = $do_transcriptions;

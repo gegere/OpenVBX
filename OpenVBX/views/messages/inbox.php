@@ -33,7 +33,9 @@
 
 		<table border="0" class="vbx-items-grid">
 			<tbody>
-				<?php foreach($items as $item): ?>
+				<?php foreach($threads as $item):
+				$item = $item[0];
+				?>
 				<tr rel="<?php echo $item['id'] ?>" class="message-row <?php echo ($item['type']=='sms')? 'sms-type' : 'call-type'?> <?php echo ($item['unread'])? 'unread' : 'read'?>">
 					<td class="message-select">
 						<div style="padding: 6px">
