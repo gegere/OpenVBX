@@ -132,10 +132,10 @@
 	<?php if(/*$type == 'sms'*/ 1): ?>
 	<div class="vbx-content-container">
 		<div class="message-details-notes">
-			<form id="reply-sms" name="reply-sms" action="<?php echo site_url("messages/sms/$id") ?>" method="post">
+			<form id="reply-sms" name="reply-sms" action="<?php echo site_url("messages/sms/".$messages[count($messages)-1]['id']) ?>" method="post">
 				<h3>Reply</h3>
-				<input type="hidden" name="from" value="<?php echo $called ?>" />
-				<input type="hidden" name="to" value="<?php echo $caller ?>" />
+				<input type="hidden" name="from" value="<?php echo $messages[0]['called'] ?>" />
+				<input type="hidden" name="to" value="<?php echo $messages[0]['caller'] ?>" />
 				<textarea id="content" name="content"></textarea>
 				<p class="count-desc"><span class="count">160</span> characters left</p>
 				<button class="submit-button"><span>Send SMS</span></button>
