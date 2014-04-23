@@ -142,6 +142,18 @@ function sort_by_date($a, $b)
 	return ($a_time > $b_time)? -1 : 1;
 }
 
+function sort_by_date_array($a, $b)
+{
+	$a_time = strtotime($a['created']);
+	$b_time = strtotime($b['created']);
+	if($a_time == $b_time)
+	{
+		return 0;
+	}
+	
+	return ($a_time > $b_time)? -1 : 1;
+}
+
 function format_short_timestamp($time)
 {
 	$start_of_today = mktime(0, 0, 0, date("n"), date("j"), date("Y"));

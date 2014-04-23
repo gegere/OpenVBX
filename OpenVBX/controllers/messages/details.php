@@ -81,6 +81,7 @@ class Details extends User_Controller
 				 'recording_length' => format_player_time($message->size),
 				 'received_time' => date('Y-M-d\TH:i:s+00:00', strtotime($message->created)),
 				 'last_updated' => date('Y-M-d\TH:i:s+00:00', strtotime($message->updated)),
+				 'created' => $message->created,
 				 'called' => format_phone($message->called),
 				 'caller' => format_phone($message->caller),
 				 'original_called' => $message->called,
@@ -101,13 +102,18 @@ class Details extends User_Controller
 			{
 				foreach($annotation as $reply)
 				{
-					$annotations[] = $reply;
+					$annotations[] = (array) $reply;
 				}
 			}
 		}
 		uasort($annotations, 'sort_by_date');
 		$annotations = array_reverse($annotations);
 		$data['annotations'] = $annotations;
+
+		$data['mergedMessages'] = array_merge($data['annotations'], $data['messages']);
+		uasort($data['mergedMessages'], 'sort_by_date_array');
+		$data['mergedMessages'] = array_reverse($data['mergedMessages']);
+
 		$prettyCaller = format_phone($details[0]['caller']);
 		$date = date('M j, Y h:i:s', strtotime($details[0]['created']));
 		$this->respond(' - '.$data['group']. " voicemail from  {$prettyCaller} at {$date} ", 'messages/details', $data);
