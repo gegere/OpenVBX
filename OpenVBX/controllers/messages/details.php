@@ -93,6 +93,21 @@ class Details extends User_Controller
 			);
 		}
 		$data['messages'] = $details;
+
+		foreach($details as $message)
+		{
+			$annotation = $this->vbx_message->get_annotations($message['id']);
+			if (!empty($annotation))
+			{
+				foreach($annotation as $reply)
+				{
+					$annotations[] = $reply;
+				}
+			}
+		}
+		uasort($annotations, 'sort_by_date');
+		$annotations = array_reverse($annotations);
+		$data['annotations'] = $annotations;
 		$prettyCaller = format_phone($details[0]['caller']);
 		$date = date('M j, Y h:i:s', strtotime($details[0]['created']));
 		$this->respond(' - '.$data['group']. " voicemail from  {$prettyCaller} at {$date} ", 'messages/details', $data);

@@ -143,7 +143,7 @@
 
 			</form>
 			<ul id="message-details-notes-list">
-				<?php foreach($annotations['items'] as $annotation): ?>
+				<?php foreach($annotations as $annotation): ?>
 				<?php if($annotation->annotation_type == 'sms'): ?>
 				<li class="note">
 					<p class="note-created unformatted-relative-timestamp hide"><?php echo strtotime($annotation->created) ?></p>
