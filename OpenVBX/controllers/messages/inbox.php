@@ -32,6 +32,7 @@ class Inbox extends User_Controller {
 		$this->template->write('title', 'Messages');
 		$this->load->helper('date');
 		$this->load->model('vbx_user');
+        $this->load->model('vbx_addressbook_contact');
 	}
 
 	public function scripts($group = false)
@@ -124,6 +125,15 @@ class Inbox extends User_Controller {
 					$assigned_user = clone($u);
 				}
 			}
+
+            $address_options = array('phone' => str_replace('+1', '', $item->caller));
+
+            $contact = $this->vbx_addressbook_contact->get_contacts($address_options);
+            if ($contact['total'] == 0) {
+                $fullname = false;
+            } else {
+                $fullname = $contact['addressbook_contacts'][0]->first_name. ' ' .$contact['addressbook_contacts'][0]->last_name;
+            }
 				
 			$items[] = array(
 				'id' => $item->id,
@@ -142,6 +152,7 @@ class Inbox extends User_Controller {
 				'last_updated' => $date_updated,
 				'called' => format_phone($item->called),
 				'caller' => format_phone($item->caller),
+                'caller_name' => $fullname,
 				'original_called' => $item->called,
 				'original_caller' => $item->caller,
 				'owner_type' => $item->owner_type,
@@ -284,6 +295,16 @@ class Inbox extends User_Controller {
 						$assigned_user = clone($u);
 					}
 				}
+
+                $address_options = array('phone' => str_replace('+1', '', $item->caller));
+
+                $contact = $this->vbx_addressbook_contact->get_contacts($address_options);
+                if ($contact['total'] == 0) {
+                    $fullname = false;
+                } else {
+                    $fullname = $contact['addressbook_contacts'][0]->first_name. ' ' .$contact['addressbook_contacts'][0]->last_name;
+                }
+
 				$items[] = array(
 								 'id' => $item->id,
 								 'folder' => $group_name,
@@ -301,11 +322,11 @@ class Inbox extends User_Controller {
 								 'last_updated' => $date_updated,
 								 'called' => format_phone($item->called),
 								 'caller' => format_phone($item->caller),
+                                 'caller_name' => $fullname,
 								 'original_called' => $item->called,
 								 'original_caller' => $item->caller,
 								 'owner_type' => $item->owner_type,
 								 );
-
 			}
 			
 			$group_name = 'Inbox';
@@ -375,6 +396,16 @@ class Inbox extends User_Controller {
 							$assigned_user = clone($u);
 						}
 					}
+
+                    $address_options = array('phone' => str_replace('+1', '', $item->caller));
+
+                    $contact = $this->vbx_addressbook_contact->get_contacts($address_options);
+                    if ($contact['total'] == 0) {
+                        $fullname = false;
+                    } else {
+                        $fullname = $contact['addressbook_contacts'][0]->first_name. ' ' .$contact['addressbook_contacts'][0]->last_name;
+                    }
+
 					$threadItem[] = array(
 									 'id' => $item->id,
 									 'folder' => $group_name,
@@ -392,6 +423,7 @@ class Inbox extends User_Controller {
 									 'last_updated' => $date_updated,
 									 'called' => format_phone($item->called),
 									 'caller' => format_phone($item->caller),
+                                     'caller_name' => $fullname,
 									 'original_called' => $item->called,
 									 'original_caller' => $item->caller,
 									 'owner_type' => $item->owner_type,

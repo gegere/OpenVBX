@@ -117,13 +117,13 @@
 					</div><!-- .message-details-playback -->
 				<?php endif; ?>
 				<div class="message-details-transcript">
-					<?php if($item['type'] == 'sms'): ?>
-					<h3>Text Message</h3>
-					<?php else: ?>
-					<h3>Transcription</h3>
-					<?php endif; ?>
-					<div class="message-transcript"><?php echo (is_null($item['summary']) ? "(no transcription)" : $item['summary']) ?></div>
-				</div><!-- .message-details-transcript -->
+                    <?php if($item['type'] == 'sms'): ?>
+                    <div class="message-transcript"><strong><?php echo $messages[0]['caller'] ?>:</strong> <?php echo (is_null($item['summary']) ? "(no transcription)" : $item['summary']) ?> <span class="unformatted-relative-timestamp" style="color:#999"><?php echo strtotime($item['created']) ?></span></div>
+                    <?php else: ?>
+                    <h3>Transcription</h3>
+                    <div class="message-transcript"><?php echo (is_null($item['summary']) ? "(no transcription)" : $item['summary']) ?></div>
+                    <?php endif; ?>
+                </div><!-- .message-details-transcript -->
 			<?php else: ?>
 				<div class="message-details-transcript response-note">
 					<p class="note-created unformatted-relative-timestamp hide"><?php echo strtotime($item['created']) ?></p>

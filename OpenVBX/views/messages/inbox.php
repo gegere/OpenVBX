@@ -43,7 +43,7 @@
 						</div>
 					</td>
 					<td class="message-caller message-details-link">
-						<span class="phone-number"><?php echo $item['caller'] ?></span>
+						<span class="phone-number"><?php echo ($item['caller_name']) ? $item['caller_name'] : $item['caller']; ?></span>
 						<a href="<?php echo site_url("messages/details/{$item['id']}")?>" class="quick-call-button"><span class="replace"><?php echo $item['caller'] ?></span></a>
 						<?php if($item['type'] == 'sms'): ?>
 						<a href="<?php echo site_url("messages/details/{$item['id']}")?>" class="quick-sms-button"><span class="replace"><?php echo $item['caller'] ?></span></a>
