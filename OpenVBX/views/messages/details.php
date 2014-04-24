@@ -140,7 +140,9 @@
 						<p class="note-user-email"><?php echo $item['email'] ?></p>
 					</div>
 					<div class="note-content">
-						<?php echo $item['description'] ?>
+
+						<?php 
+						echo str_replace($messages[0]['called']. ' to ' .$messages[0]['caller'], '<strong>Me</strong>', $item['description'] ) ?>
 					</div>
 				</div><!-- .message-details-transcript -->
 			<?php endif; ?>
