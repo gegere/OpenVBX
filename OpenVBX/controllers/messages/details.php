@@ -32,6 +32,7 @@ class Details extends User_Controller
 		parent::__construct();
 		$this->section = 'messages';
 		$this->template->write('title', 'Message');
+        $this->load->model('vbx_addressbook_contact');
 	}
 
 	function index($message_id, $action = 'read')
@@ -84,6 +85,7 @@ class Details extends User_Controller
 				 'created' => $message->created,
 				 'called' => format_phone($message->called),
 				 'caller' => format_phone($message->caller),
+				 'caller_name' => $this->caller_name($message->caller),
 				 'original_called' => $message->called,
 				 'original_caller' => $message->caller,
 				 'folder' => $data['group'],
@@ -118,6 +120,21 @@ class Details extends User_Controller
 		$date = date('M j, Y h:i:s', strtotime($details[0]['created']));
 		$this->respond(' - '.$data['group']. " voicemail from  {$prettyCaller} at {$date} ", 'messages/details', $data);
 	}
+
+
+	function caller_name($caller)
+	{
+        $address_options = array('phone' => str_replace('+1', '', $caller));
+
+        $contact = $this->vbx_addressbook_contact->get_contacts($address_options);
+        if ($contact['total'] == 0) {
+            $fullname = false;
+        } else {
+            $fullname = $contact['addressbook_contacts'][0]->first_name. ' ' .$contact['addressbook_contacts'][0]->last_name;
+        }
+        return $fullname;
+    }
+
 	
 	function details($message_id, $action = 'read')
 	{

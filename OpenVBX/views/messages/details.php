@@ -24,7 +24,7 @@
 							<span class="call-from-label">From:</span>
 						</td>
 						<td>
-							<span class="call-from-number"><?php echo $messages[0]['caller'] ?></span>
+							<span class="call-from-number"><?php echo ($messages[0]['caller_name']) ? $messages[0]['caller_name'] .' '. $messages[0]['caller'] : $messages[0]['caller']; ?></span>
 							<a href="" class="quick-call-button"><span class="replace">Call</span></a>
 							<div id="quick-call-popup-<?php echo $id ?>" class="quick-call-popup hide">
 								<a href="" class="close action toggler"><span class="replace">close</span></a>	
