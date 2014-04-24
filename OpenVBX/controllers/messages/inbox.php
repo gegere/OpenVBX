@@ -125,15 +125,6 @@ class Inbox extends User_Controller {
 					$assigned_user = clone($u);
 				}
 			}
-
-            $address_options = array('phone' => str_replace('+1', '', $item->caller));
-
-            $contact = $this->vbx_addressbook_contact->get_contacts($address_options);
-            if ($contact['total'] == 0) {
-                $fullname = false;
-            } else {
-                $fullname = $contact['addressbook_contacts'][0]->first_name. ' ' .$contact['addressbook_contacts'][0]->last_name;
-            }
 				
 			$items[] = array(
 				'id' => $item->id,
@@ -152,7 +143,7 @@ class Inbox extends User_Controller {
 				'last_updated' => $date_updated,
 				'called' => format_phone($item->called),
 				'caller' => format_phone($item->caller),
-                'caller_name' => $fullname,
+                'caller_name' => $this->caller_name($item->caller),
 				'original_called' => $item->called,
 				'original_caller' => $item->caller,
 				'owner_type' => $item->owner_type,
@@ -296,15 +287,6 @@ class Inbox extends User_Controller {
 					}
 				}
 
-                $address_options = array('phone' => str_replace('+1', '', $item->caller));
-
-                $contact = $this->vbx_addressbook_contact->get_contacts($address_options);
-                if ($contact['total'] == 0) {
-                    $fullname = false;
-                } else {
-                    $fullname = $contact['addressbook_contacts'][0]->first_name. ' ' .$contact['addressbook_contacts'][0]->last_name;
-                }
-
 				$items[] = array(
 								 'id' => $item->id,
 								 'folder' => $group_name,
@@ -322,7 +304,7 @@ class Inbox extends User_Controller {
 								 'last_updated' => $date_updated,
 								 'called' => format_phone($item->called),
 								 'caller' => format_phone($item->caller),
-                                 'caller_name' => $fullname,
+                                 'caller_name' => $this->caller_name($item->caller),
 								 'original_called' => $item->called,
 								 'original_caller' => $item->caller,
 								 'owner_type' => $item->owner_type,
@@ -397,15 +379,6 @@ class Inbox extends User_Controller {
 						}
 					}
 
-                    $address_options = array('phone' => str_replace('+1', '', $item->caller));
-
-                    $contact = $this->vbx_addressbook_contact->get_contacts($address_options);
-                    if ($contact['total'] == 0) {
-                        $fullname = false;
-                    } else {
-                        $fullname = $contact['addressbook_contacts'][0]->first_name. ' ' .$contact['addressbook_contacts'][0]->last_name;
-                    }
-
 					$threadItem[] = array(
 									 'id' => $item->id,
 									 'folder' => $group_name,
@@ -423,7 +396,7 @@ class Inbox extends User_Controller {
 									 'last_updated' => $date_updated,
 									 'called' => format_phone($item->called),
 									 'caller' => format_phone($item->caller),
-                                     'caller_name' => $fullname,
+                                     'caller_name' => $this->caller_name($item->caller),
 									 'original_called' => $item->called,
 									 'original_caller' => $item->caller,
 									 'owner_type' => $item->owner_type,
@@ -480,6 +453,19 @@ class Inbox extends User_Controller {
 		$data['json'] = $json;
 		$this->respond(' - '.$group_name, 'messages/inbox', $data);
 	}
+
+	function caller_name($caller)
+	{
+        $address_options = array('phone' => str_replace('+1', '', $caller));
+
+        $contact = $this->vbx_addressbook_contact->get_contacts($address_options);
+        if ($contact['total'] == 0) {
+            $fullname = false;
+        } else {
+            $fullname = $contact['addressbook_contacts'][0]->first_name. ' ' .$contact['addressbook_contacts'][0]->last_name;
+        }
+        return $fullname;
+    }
 
 	// GET returns JSON; POST saves note and redirects
 	function edit($message_id) {
