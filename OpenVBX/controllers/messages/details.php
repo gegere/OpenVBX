@@ -104,6 +104,7 @@ class Details extends User_Controller
 			{
 				foreach($annotation as $reply)
 				{
+					$reply->created = date('Y-M-d\TH:i:s+00:00', strtotime($reply->created));
 					$annotations[] = (array) $reply;
 				}
 			}
