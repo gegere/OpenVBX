@@ -29,7 +29,7 @@ $config['base_url']= "https://".$config['server_name']. rtrim(WEB_ROOT, '/').'/'
 | Used for asset url versioning.
 |
 */
-$config['site_rev'] = 1023;
+$config['site_rev'] = 1024;
 
 /*
 |--------------------------------------------------------------------------

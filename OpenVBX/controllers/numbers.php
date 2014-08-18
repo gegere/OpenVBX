@@ -45,6 +45,7 @@ class Numbers extends User_Controller
 		
 		$numbers = array();
 		$data['countries'] = array();
+        $data['openvbx_js']['countries'] = array();
 		try
 		{
 			$numbers = $this->vbx_incoming_numbers->get_numbers();
@@ -55,9 +56,10 @@ class Numbers extends User_Controller
 			{
 				$data['countries'][$country->country_code] = $country->country;
 				$country->available = array_keys(get_object_vars($country->subresource_uris));
-				unset($country->uri, $country->subresource_uris);
+				unset($country->uri, $country->subresource_uris, $country->client);
 			}
-			$data['openvbx_js']['countries'] = json_encode($countries);
+
+            $data['openvbx_js']['countries'] = json_encode($countries);
 		}
 		catch (VBX_IncomingNumberException $e)
 		{
@@ -101,6 +103,8 @@ class Numbers extends User_Controller
 					}
 				}
 				$item->capabilities = $capabilities;
+
+                $item->status = null;
 
 				if ($item->installed)
 				{
