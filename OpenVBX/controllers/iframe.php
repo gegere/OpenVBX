@@ -24,12 +24,12 @@
 class Iframe extends User_Controller {
 
 	protected $client_token_timeout;	
-	protected $twilio_js_version = '1.2';
+	protected $twilio_js_version = '1.4.27';
 
 	function index() {
 		$data = $this->init_view_data();
 		
-		$twilio_js = sprintf('//static.twilio.com/libs/twiliojs/%s/twilio%s.js', 
+		$twilio_js = sprintf('//media.twiliocdn.com/sdk/js/client/releases/%s/twilio%s.js', 
 			$this->twilio_js_version,
 			($this->config->item('use_unminimized_js') ? '' : '.min')
 		);
