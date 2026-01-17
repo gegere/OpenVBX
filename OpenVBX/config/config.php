@@ -6,7 +6,7 @@
 |--------------------------------------------------------------------------
 */
 // @TODO: xss protection
-$config['server_name'] = $_SERVER['HTTP_HOST'];
+$config['server_name'] = 'hello.wi.rentals';
 
 /*
 |--------------------------------------------------------------------------
@@ -327,7 +327,7 @@ $config['cache_path'] = '';
 | enabled you MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = "";
+$config['encryption_key'] = 'd2007a4a8d029b2bcad3188cc7907fec1a170f3e4a6865bb2ef3a7aafb28a2a6';
 
 /*
 |--------------------------------------------------------------------------
@@ -341,12 +341,12 @@ $config['encryption_key'] = "";
 | 'time_to_update'		= how many seconds between CI refreshing Session Information
 |
 */
-$config['sess_cookie_name']		= 'openvbx_session';
-$config['sess_expiration']		= 7200;
+$config['sess_cookie_name']	= 'openvbx_session';
+$config['sess_expiration']	= 7200;
 $config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= FALSE;
-$config['sess_table_name']		= 'sessions';
-$config['sess_match_ip']		= FALSE;
+$config['sess_table_name']	= 'sessions';
+$config['sess_match_ip']	= FALSE;
 $config['sess_time_to_update'] 	= 300;
 
 /*
@@ -359,13 +359,9 @@ $config['sess_time_to_update'] 	= 300;
 | 'cookie_path'   =  Typically will be a forward slash
 |
 */
-$config['cookie_prefix']	= "";
-$config['cookie_domain']	= parse_url($config['base_url'], PHP_URL_HOST);
-$config['cookie_path']		= WEB_ROOT;
-if(empty($config['cookie_path']))
-{
-	$config['cookie_path'] = '/';
-}
+$config['cookie_prefix']	= '';
+$config['cookie_domain']	= 'hello.wi.rentals';
+$config['cookie_path']		= '/';
 
 /*
 |--------------------------------------------------------------------------
