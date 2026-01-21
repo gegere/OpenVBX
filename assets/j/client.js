@@ -87,11 +87,6 @@ var Client = {
 				Client.cancel(conn);
 			});
 			
-			Twilio.Device.presence(function(event) {
-				Client.log('event: presence');
-				Client.handleEvent(event);
-			});
-		
 			$('#dialer #client-ui-actions button').hide();
 		}
 		catch (e) {
@@ -182,18 +177,6 @@ var Client = {
 			}
 		}
 		
-		// notify the iframe
-		try {
-			if (window.frames['openvbx-iframe'].OpenVBX.presence) {
-				window.frames['openvbx-iframe'].OpenVBX.presence._set(event, Client.clients);
-			}
-		}
-		catch (e) {
-			// fail silently, probably tried during a page load or something fun like that
-		}
-
-		// trigger event for main frame listeners
-		$(this).trigger('presence', [event, Client.clients]);
 	},
 	
 	setCallMode: function() {
@@ -939,15 +922,7 @@ $(function () {
 		stopEvent(event);
 		Client.ui.toggleCallMode(this);
 	});
-	
-	// init presence
-	
-	// bind to event handler on Client object to get presence events
-	$(Client).bind('presence', function(e, event, clients) {
-		var userid = event.from.replace('client:', '');
-		Client.ui.toggleUserStatus(userid, event.available);
-	});
-	
+		
 	if (OpenVBX.client_capability) {
 		Client.setCallMode();
 		Client.init();
